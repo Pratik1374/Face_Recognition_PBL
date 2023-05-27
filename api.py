@@ -8,7 +8,7 @@ import tensorflow as tf
 app = Flask(__name__)
 
 # Load the TFLite model and define the preprocess_image function
-interpreter = tf.lite.Interpreter(model_path='D:\\Android\\Face Recognition System\\model_3.tflite')
+interpreter = tf.lite.Interpreter(model_path='model_3.tflite')
 interpreter.allocate_tensors()
 
 @app.route('/predict', methods=['POST'])
