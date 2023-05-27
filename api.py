@@ -47,15 +47,37 @@ def predict():
     predicted_class_index = np.argmax(output_data)
     print(predicted_class_index)
 
+
+    predicted_class_index = int(predicted_class_index)  # Convert to Python integer
+    probability = output_data[0][predicted_class_index].item()
+
+    # Check if the probability is greater than 65
+    if probability > 0.65:
+        confidence = 'Confidence : '+str(probability)
+        if predicted_class_index == 0:
+            prn = "PRN : 2021000248"
+            name = "Name : Ashish Musale"
+            roll = "Roll No : TYCSEC46"
+        elif predicted_class_index == 1:
+            prn = "PRN : 2021000261"
+            name= "Name : Sadik Athanikar"
+            roll = "Roll No : TYCSEA02"
+        else:
+            prn = "PRN : 2021000326"
+            name = "Name : Pratik Jadhav"
+            roll = "Roll No : TYCSEA27"
+        result_string = '\n'.join([prn,name,roll,confidence])
+    else:
+        result_string = 'Unable to detect face'
+  
     # Return the predicted class and probability
     return {
-        'class': predicted_class_index,
-        'probability': output_data[predicted_class_index]
+        'details': result_string
     }
 
-@app.route('/call', methods=['GET'])
+@app.route('/predict', methods=['GET'])
 def call():
-    return {'hello': 'user'}
+    return {'hello':'success'}
 
-if __name__ == '__main__':
-    app.run(host ='0.0.0.0',port = 5000, debug=True)
+if _name_ == '_main_':
+    app.run(host ='0.0.0.0',port = 5000,debug=True)
